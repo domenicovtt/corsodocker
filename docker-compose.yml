@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: studenti
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mysql/mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  app:
+    build: ./php
+    volumes:
+      - ./php:/var/www/html/
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    environment:
+      PHP_MYSQL_HOST: db
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: password
+      PMA_ARBITRARY: 0
+    depends_on:
+      - db

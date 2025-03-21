@@ -1,0 +1,9 @@
+CREATE DATABASE IF NOT EXISTS studenti;
+USE studenti;
+
+CREATE TABLE IF NOT EXISTS studenti (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    cognome VARCHAR(255) NOT NULL,
+    eta INT
+);
